@@ -30,12 +30,15 @@
           center: originLatLng
         });
 
-        this.marker = new google.maps.Marker({
+        marker = new google.maps.Marker({
           position: originLatLng,
           map: map,
-          title: 'Hello World!',
+          title: 'original',
           icon: 't.png'
         });
+
+        this.markerArray = [];
+        markerArray.push(this.marker);
 
         map.addListener('center_changed', function() {
             latlng = map.getCenter();
@@ -74,20 +77,23 @@
         
         var LatLng = {lat: lat, lng: lng};
 
-        new google.maps.Marker({
+        marker = new google.maps.Marker({
             position:LatLng,
             map: map,
             title: 'Hello world!',
             icon: 't.png'
         })
+        markerArray.push(marker);
     };
 
     function toggleMarkder() {
-        if (this.marker.getVisible()) {
-            this.marker.setVisible(false);
-        } else {
-            this.marker.setVisible(true);
-        };
+        for(var m in markerArray) {
+            if (markerArray[m].getVisible()) {
+                markerArray[m].setVisible(false);
+            } else {
+                markerArray[m].setVisible(true);
+            };
+        }
     };
 
     </script>
