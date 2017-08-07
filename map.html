@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Simple markers</title>
+    <style>
+      #map {
+        height: 100%;
+      }
+      html, body {
+        height: 80%;
+        width: 80%;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="map"></div>
+    <script>
+      function initMap() {
+        var originLatLng = {lat: 35.6807233, lng: 139.7676282};
+
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 15,
+          center: originLatLng
+        });
+
+        var marker = new google.maps.Marker({
+          position: originLatLng,
+          map: map,
+          title: 'Hello World!',
+          icon: 't.png'
+        });
+
+        map.addListener('center_changed', function() {
+            latlng = map.getCenter();
+            //console.log(latlng.lat());
+            //console.log(latlng.lng());
+            document.getElementById("lat").innerHTML = latlng.lat();
+            document.getElementById("lng").innerHTML = latlng.lng();
+        });
+
+        map.addListener('bounds_changed', function() {
+            var bounds = map.getBounds();
+            var latlng = bounds.getNorthEast();
+
+            //console.log(latlng);
+            document.getElementById("North").innerHTML = latlng.lat();
+            document.getElementById("East").innerHTML = latlng.lng();
+
+            var latlng = bounds.getSouthWest();
+            document.getElementById("South").innerHTML = latlng.lat();
+            document.getElementById("West").innerHTML = latlng.lng();
+        });
+
+      }
+
+    </script>
+
+    <script src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?callback=initMap">
+    </script>
+
+    <ul>
+        <li>Latitude<div id="lat"></div></li>
+        <li>Longitude<div id="lng"></div></li>
+    </ul>
+
+    <ul>
+        <li>North bound<div id="North"></div></li>
+        <li>South bound<div id="South"></div></li>
+        <li>East bound<div id="East"></div></li>
+        <li>West bound<div id="West"></div></li>
+    <ul>
+  </body>
+</html>
