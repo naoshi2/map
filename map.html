@@ -16,7 +16,10 @@
   </head>
 
   <body>
-    <img src="t.png" />
+    <div id="legend">
+        <img src="t.png" />
+    </div>
+
     <div id="map"></div>
     <script>
       function initMap() {
@@ -27,7 +30,7 @@
           center: originLatLng
         });
 
-        var marker = new google.maps.Marker({
+        this.marker = new google.maps.Marker({
           position: originLatLng,
           map: map,
           title: 'Hello World!',
@@ -77,7 +80,15 @@
             title: 'Hello world!',
             icon: 't.png'
         })
-    }
+    };
+
+    function toggleMarkder() {
+        if (this.marker.getVisible()) {
+            this.marker.setVisible(false);
+        } else {
+            this.marker.setVisible(true);
+        };
+    };
 
     </script>
 
@@ -103,6 +114,10 @@
     <script>
     $("#space, #map").dblclick(function (){
         addMarkder();
+    });
+
+    $("#legend").dblclick(function (){
+        toggleMarkder();
     });
     </script>
   </body>
