@@ -16,12 +16,13 @@
   </head>
 
   <body>
+    <img src="t.png" />
     <div id="map"></div>
     <script>
       function initMap() {
         var originLatLng = {lat: 35.6807233, lng: 139.7676282};
 
-        var map = new google.maps.Map(document.getElementById('map'), {
+        this.map = new google.maps.Map(document.getElementById('map'), {
           zoom: 15,
           center: originLatLng
         });
@@ -35,26 +36,48 @@
 
         map.addListener('center_changed', function() {
             latlng = map.getCenter();
-            //console.log(latlng.lat());
-            //console.log(latlng.lng());
             document.getElementById("lat").innerHTML = latlng.lat();
             document.getElementById("lng").innerHTML = latlng.lng();
         });
 
         map.addListener('bounds_changed', function() {
-            var bounds = map.getBounds();
-            var latlng = bounds.getNorthEast();
+            bounds = getBounds(map);
 
-            //console.log(latlng);
-            document.getElementById("North").innerHTML = latlng.lat();
-            document.getElementById("East").innerHTML = latlng.lng();
-
-            var latlng = bounds.getSouthWest();
-            document.getElementById("South").innerHTML = latlng.lat();
-            document.getElementById("West").innerHTML = latlng.lng();
+            document.getElementById("North").innerHTML = bounds.North;
+            document.getElementById("East").innerHTML = bounds.East;
+            document.getElementById("South").innerHTML = bounds.South;
+            document.getElementById("West").innerHTML = bounds.West;
         });
-
       }
+
+      function getBounds(map) {
+        var bounds = {};
+
+        var latlng = map.getBounds().getNorthEast();
+        bounds.North = latlng.lat();
+        bounds.East = latlng.lng();
+
+        var latlng = map.getBounds().getSouthWest();
+        bounds.South = latlng.lat();
+        bounds.West = latlng.lng();
+
+        return bounds;
+      }
+
+    function addMarkder() {
+        boouns = getBounds(this.map);
+        lat = Math.random() * (bounds.North - boouns.South) + bounds.South;
+        lng = Math.random() * (bounds.East - boouns.West) + bounds.West;
+        
+        var LatLng = {lat: lat, lng: lng};
+
+        new google.maps.Marker({
+            position:LatLng,
+            map: map,
+            title: 'Hello world!',
+            icon: 't.png'
+        })
+    }
 
     </script>
 
@@ -63,6 +86,7 @@
         src="https://maps.googleapis.com/maps/api/js?callback=initMap">
     </script>
 
+    <div id="space">
     <ul>
         <li>Latitude<div id="lat"></div></li>
         <li>Longitude<div id="lng"></div></li>
@@ -73,6 +97,13 @@
         <li>South bound<div id="South"></div></li>
         <li>East bound<div id="East"></div></li>
         <li>West bound<div id="West"></div></li>
-    <ul>
+    </ul>
+    </div>
+
+    <script>
+    $("#space, #map").dblclick(function (){
+        addMarkder();
+    });
+    </script>
   </body>
 </html>
