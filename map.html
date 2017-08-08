@@ -24,6 +24,8 @@
     <script>
       function initMap() {
         var originLatLng = {lat: 35.6807233, lng: 139.7676282};
+        document.getElementById("lat").textContent = originLatLng.lat;
+        document.getElementById("lng").textContent = originLatLng.lng;
 
         this.map = new google.maps.Map(document.getElementById('map'), {
           zoom: 15,
@@ -34,7 +36,7 @@
           position: originLatLng,
           map: map,
           title: 'original',
-          icon: 't.png'
+          icon: 't.png',
         });
 
         this.markerArray = [];
@@ -42,17 +44,17 @@
 
         map.addListener('center_changed', function() {
             latlng = map.getCenter();
-            document.getElementById("lat").innerHTML = latlng.lat();
-            document.getElementById("lng").innerHTML = latlng.lng();
+            document.getElementById("lat").textContent = latlng.lat();
+            document.getElementById("lng").textContent = latlng.lng();
         });
 
         map.addListener('bounds_changed', function() {
             bounds = getBounds(map);
 
-            document.getElementById("North").innerHTML = bounds.North;
-            document.getElementById("East").innerHTML = bounds.East;
-            document.getElementById("South").innerHTML = bounds.South;
-            document.getElementById("West").innerHTML = bounds.West;
+            document.getElementById("North").textContent = bounds.North;
+            document.getElementById("East").textContent = bounds.East;
+            document.getElementById("South").textContent = bounds.South;
+            document.getElementById("West").textContent = bounds.West;
         });
       }
 
@@ -105,15 +107,15 @@
 
     <div id="space">
     <ul>
-        <li>Latitude<div id="lat"></div></li>
-        <li>Longitude<div id="lng"></div></li>
+        <li>Latitude: <span id="lat"></li>
+        <li>Longitude: <span id="lng"></li>
     </ul>
 
     <ul>
-        <li>North bound<div id="North"></div></li>
-        <li>South bound<div id="South"></div></li>
-        <li>East bound<div id="East"></div></li>
-        <li>West bound<div id="West"></div></li>
+        <li>North bound: <span id="North"> </li>
+        <li>South bound: <span id="South"> </li>
+        <li>East bound: <span id="East"> </li>
+        <li>West bound: <span id="West"> </li>
     </ul>
     </div>
 
