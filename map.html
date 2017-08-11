@@ -1,17 +1,15 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <script src="map.js"></script>
+    <script src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?callback=initMap"> </script>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
     <title>Simple markers</title>
     <style>
-      #map {
-        height: 100%;
-      }
-      html, body {
-        height: 80%;
-        width: 80%;
-      }
+      #map { height: 700px; width: 900px; }
+      html, body { height: 80%; width: 80%; }
     </style>
   </head>
 
@@ -21,89 +19,6 @@
     </div>
 
     <div id="map"></div>
-    <script>
-      function initMap() {
-        var originLatLng = {lat: 35.6807233, lng: 139.7676282};
-        document.getElementById("lat").textContent = originLatLng.lat;
-        document.getElementById("lng").textContent = originLatLng.lng;
-
-        this.map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 15,
-          center: originLatLng
-        });
-
-        marker = new google.maps.Marker({
-          position: originLatLng,
-          map: map,
-          title: 'original',
-          icon: 't.png',
-        });
-
-        this.markerArray = [];
-        markerArray.push(this.marker);
-
-        map.addListener('center_changed', function() {
-            latlng = map.getCenter();
-            document.getElementById("lat").textContent = latlng.lat();
-            document.getElementById("lng").textContent = latlng.lng();
-        });
-
-        map.addListener('bounds_changed', function() {
-            bounds = getBounds(map);
-
-            document.getElementById("North").textContent = bounds.North;
-            document.getElementById("East").textContent = bounds.East;
-            document.getElementById("South").textContent = bounds.South;
-            document.getElementById("West").textContent = bounds.West;
-        });
-      }
-
-      function getBounds(map) {
-        var bounds = {};
-
-        var latlng = map.getBounds().getNorthEast();
-        bounds.North = latlng.lat();
-        bounds.East = latlng.lng();
-
-        var latlng = map.getBounds().getSouthWest();
-        bounds.South = latlng.lat();
-        bounds.West = latlng.lng();
-
-        return bounds;
-      }
-
-    function addMarkder() {
-        boouns = getBounds(this.map);
-        lat = Math.random() * (bounds.North - boouns.South) + bounds.South;
-        lng = Math.random() * (bounds.East - boouns.West) + bounds.West;
-        
-        var LatLng = {lat: lat, lng: lng};
-
-        marker = new google.maps.Marker({
-            position:LatLng,
-            map: map,
-            title: 'Hello world!',
-            icon: 't.png'
-        })
-        markerArray.push(marker);
-    };
-
-    function toggleMarkder() {
-        for(var m in markerArray) {
-            if (markerArray[m].getVisible()) {
-                markerArray[m].setVisible(false);
-            } else {
-                markerArray[m].setVisible(true);
-            };
-        }
-    };
-
-    </script>
-
-    <script src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
-    <script async defer
-        src="https://maps.googleapis.com/maps/api/js?callback=initMap">
-    </script>
 
     <div id="space">
     <ul>
@@ -119,6 +34,8 @@
     </ul>
     </div>
 
+    <div id="hoge">Address: <span id="address"></div></div> 
+
     <script>
     $("#space, #map").dblclick(function (){
         addMarkder();
@@ -127,6 +44,23 @@
     $("#legend").dblclick(function (){
         toggleMarkder();
     });
+
+  $('#hoge').click(function() {
+    $.getJSON('http://zipcloud.ibsnet.co.jp/api/search?callback=?',
+      {
+        zipcode: "244-0002"
+      }
+    )
+    .done(function(data) {
+        console.log(data);
+      if (data.results) {
+        var result = data.results[0];
+        document.getElementById("address").textContent = result.address1 + result.address2 + result.address3;
+      } else {
+        $('#twitter').val('NA');
+      }
+    });
+  });
     </script>
   </body>
 </html>
