@@ -45,6 +45,9 @@ client.stream('user',
           hash.profile = tweet['user']['profile_image_url'];
           hash.user = tweet['user']['screen_name'];
           hash.text = tweet.text;
+          if (tweet.entities.media !== undefined) {
+              hash.image = tweet.entities.media[0].media_url;
+          }
           broadcast(hash);
       }
     });

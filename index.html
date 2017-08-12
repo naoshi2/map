@@ -19,10 +19,33 @@
       socket = new WebSocket("ws://127.0.0.1:8081");
 	    socket.onmessage = function(event) {
         tweet = JSON.parse(event.data);
-        text = "<li>" + tweet.text + "</li>";
-        $('.twitter').prepend(text);
-        console.log(tweet.date);
-        console.log(tweet.user);
+
+        // image
+        if(tweet.image !== undefined) {
+          $('.twitter').prepend('<div id="attached_image"><img /></div>');
+	        console.log(tweet.image);
+
+          var image_url = tweet.image;
+          var imgPreloader=new Image();
+          imgPreloader.onload=function() { 
+             $('#attached_image').children('img').attr({'src':image_url, 'height':256});
+          }
+          imgPreloader.src = image_url;
+        }
+
+        // Tweet
+        $('.twitter').prepend("<p>" + tweet.text + "</p>");
+
+        // Screen name
+        $('.twitter').prepend("<p>" + tweet.user + "</p>");
+
+        // Profile image
+        $('.twitter').prepend("<div id='profile'><img /></div>");
+        var imgPreloader = new Image();
+        imgPreloader.onload = function() {
+          $('#profile').children('img').attr({'src':tweet.profile, 'height':50, 'align':'left'});
+        }
+        imgPreloader.src = tweet.profile;
 	    }
     }
     </script>
