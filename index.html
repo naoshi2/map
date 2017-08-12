@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <title>News from Twitter</title>
+    <style>
+      html, body { height: 80%; width: 80%; }
+    </style>
+  </head>
+
+  <body>
+    <h1>Twitter: </h1>
+    <ul>
+      <div class="twitter"></div>
+    </ul>
+
+    <script>
+    window.onload = function() {
+      socket = new WebSocket("ws://127.0.0.1:8081");
+
+	    socket.onmessage = function(event) {
+        //document.getElementById('twitter').innerHTML = event.data;
+        text = "<li>" + event.data + "</li>"
+        $('.twitter').prepend(text);
+        console.log(text);
+	    }
+    }
+    </script>
+  </body>
+</html>

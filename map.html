@@ -35,8 +35,16 @@
     </div>
 
     <div id="hoge">Address: <span id="address"></div></div> 
+    Twitter: <span id="twitter"></div>
 
     <script>
+    window.onload = function() {
+  	  socket = new WebSocket("ws://127.0.0.1:8081");
+	    socket.onmessage = function(event) {
+		    document.getElementById('twitter').innerHTML = event.data;
+	    }
+    }
+
     $("#space, #map").dblclick(function (){
         addMarkder();
     });
