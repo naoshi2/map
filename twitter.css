@@ -1,0 +1,54 @@
+#profile {
+  margin: 10px;
+}
+
+#text {
+  display: inline-block;
+  font-family: "Helvetica Neue", Roboto, "Segoe UI", Calibri, sans-serif;
+  font-size: 16px;
+  line-height: 16px;
+  border-color: #eee #ddd #bbb;
+  border-radius: 5px;
+  border-style: solid;
+  border-width: 1px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+  margin: 10px 5px;
+  padding: 16px 16px 16px 16px;
+  max-width: 468px;
+}
+
+#text p {
+  font-size: 16px;
+  font-weight: normal;
+  line-height: 20px;
+}
+
+#text a {
+  color: #2b7bb9;
+  font-weight: normal;
+  text-decoration: none;
+  outline: 0 none;
+}
+
+#text a:hover,
+#text a:focus {
+  text-decoration: underline;
+}
+
+#user {
+  color: black;
+  font-family: "Helvetica Neue", Roboto, "Segoe UI", Calibri, sans-serif;
+  font-size: 14px;
+  text-decoration: none;
+  outline: 0 none;
+}
+
+#user a {
+  color: black;
+  font-weight: bold;
+}
+
+#user a:hover {
+  color: #2b7bb9;
+  text-decoration: underline;
+}

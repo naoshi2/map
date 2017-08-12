@@ -37,7 +37,7 @@ client.stream('user',
     stream.on('data', function(tweet) {
       text = JSON.stringify(tweet);
       tweet = JSON.parse(text);
-      if (tweet['user']['followers_count'] > 20) {
+      if (tweet['user']['followers_count'] > 20000) {
           text = tweet.text + ' - @' +  tweet['user']['screen_name'];
 
           var hash = {};

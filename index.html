@@ -2,6 +2,7 @@
 <html>
   <head>
     <script src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="twitter.css">
     <title>News from Twitter</title>
     <style>
       html, body { height: 80%; width: 80%; }
@@ -34,10 +35,14 @@
         }
 
         // Tweet
-        $('.twitter').prepend("<p>" + tweet.text + "</p>");
+        $('.twitter').prepend('<p id="text">' + tweet.text + '</p>');
 
         // Screen name
-        $('.twitter').prepend("<p>" + tweet.user + "</p>");
+        unixtime = Date.parse(tweet.date);
+        var date = new Date(unixtime);
+        localDate = date.toLocaleDateString();
+        localtime = date.toLocaleTimeString();
+        $('.twitter').prepend('<p id="user">' + localDate + " " + localtime + " @" + tweet.user + '</p>');
 
         // Profile image
         $('.twitter').prepend("<div id='profile'><img /></div>");
