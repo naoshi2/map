@@ -28,19 +28,24 @@ wss.on('connection', function (ws) {
 
 function broadcast(message) {
     connections.forEach(function (con, i) {
-        con.send(message);
+        con.send(JSON.stringify(message));
     });
 };
  
 client.stream('user',   
     function(stream){
     stream.on('data', function(tweet) {
-      json = JSON.stringify(tweet);
-      tweet = JSON.parse(json);
-      if (tweet['user']['followers_count'] > 200000) {
+      text = JSON.stringify(tweet);
+      tweet = JSON.parse(text);
+      if (tweet['user']['followers_count'] > 20) {
           text = tweet.text + ' - @' +  tweet['user']['screen_name'];
-          broadcast(text);
-          console.log(text);
+
+          var hash = {};
+          hash.date= tweet['created_at'];
+          hash.profile = tweet['user']['profile_image_url'];
+          hash.user = tweet['user']['screen_name'];
+          hash.text = tweet.text;
+          broadcast(hash);
       }
     });
 
