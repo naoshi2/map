@@ -14,12 +14,12 @@ var wss = new WebSocketServer({server:server});
 var connections = [];
 
 wss.on('connection', function (ws) {
-    var params = {count: 50};
+    var params = {count: 100};
     client.get('statuses/home_timeline',  params, function(error, tweet, response) {
         if (!error) {
           tweet = tweet.reverse();
           tweet.forEach(function(val, index, ar) {
-            if (tweet[index]['user']['followers_count'] > 5000) {
+            if (tweet[index]['user']['followers_count'] > 100000) {
                 console.log(tweet[index]['user']['profile_image_url']);
     
                 var hash = {};
@@ -27,9 +27,6 @@ wss.on('connection', function (ws) {
                 hash.profile = tweet[index]['user']['profile_image_url'];
                 hash.user = tweet[index]['user']['screen_name'];
                 hash.text = tweet[index]['text'];
-                //if (tweet[index][entities][media] !== undefined) {
-                //    hash.image = tweet[index][entities].media[0].media_url;
-                //}
                 broadcast(hash);
             }
         });

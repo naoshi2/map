@@ -44,15 +44,15 @@
         $('.twitter').prepend('<p id="user">' + localDate + " " + localtime + " @" + tweet.user + '</p>');
 
         // Profile image
-        $('.twitter').prepend("<div id='profile'><img /></div>");
+        $('.twitter').prepend('<div id="profile"><img /></div>');
         var imgPreloader = new Image();
         imgPreloader.onload = function() {
-          $('#profile').children('img').attr({'src':tweet.profile, 'height':50, 'align':'left'});
-          //console.log(tweet.profile);
+          console.log(tweet.profile);
         }
         imgPreloader.src = tweet.profile;
-	    }
-    }
+        $('#profile').children('img').attr({'src':tweet.profile, 'height':50, 'align':'left'});
+      }
+  }
     </script>
   </body>
 </html>
