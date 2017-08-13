@@ -37,18 +37,18 @@ client.stream('user',
     stream.on('data', function(tweet) {
       text = JSON.stringify(tweet);
       tweet = JSON.parse(text);
-      if (tweet['user']['followers_count'] > 20000) {
-          text = tweet.text + ' - @' +  tweet['user']['screen_name'];
+      if (tweet['user']['followers_count'] > 200000) {
+        console.log(tweet['user']['screen_name']);
 
-          var hash = {};
-          hash.date= tweet['created_at'];
-          hash.profile = tweet['user']['profile_image_url'];
-          hash.user = tweet['user']['screen_name'];
-          hash.text = tweet.text;
-          if (tweet.entities.media !== undefined) {
-              hash.image = tweet.entities.media[0].media_url;
-          }
-          broadcast(hash);
+        var hash = {};
+        hash.date= tweet['created_at'];
+        hash.profile = tweet['user']['profile_image_url'];
+        hash.user = tweet['user']['screen_name'];
+        hash.text = tweet.text;
+        if (tweet.entities.media !== undefined) {
+            hash.image = tweet.entities.media[0].media_url;
+        }
+        broadcast(hash);
       }
     });
 
