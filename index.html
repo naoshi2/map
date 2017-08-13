@@ -24,7 +24,6 @@
         // image
         if(tweet.image !== undefined) {
           $('.twitter').prepend('<div id="attached_image"><img /></div>');
-	        console.log(tweet.image);
 
           var image_url = tweet.image;
           var imgPreloader=new Image();
@@ -49,6 +48,7 @@
         var imgPreloader = new Image();
         imgPreloader.onload = function() {
           $('#profile').children('img').attr({'src':tweet.profile, 'height':50, 'align':'left'});
+          //console.log(tweet.profile);
         }
         imgPreloader.src = tweet.profile;
 	    }
