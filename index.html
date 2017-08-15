@@ -21,7 +21,7 @@
   </ul>
 
   <script>
-    var breaking = /^Breaking.*/i;
+    var breaking = /^.Breaking.*/i;
     var justin = /^Just in.*/i;
     var sokuho = /^‘¬•ñ.*/i;
     window.onload = function () {
@@ -52,7 +52,7 @@
 
         // Screen name
         unixtime = Date.parse(tweet.date);
-        var date = new Date(unixtime);
+        var date1 = new Date(unixtime);
         localDate = date.toLocaleDateString();
         localtime = date.toLocaleTimeString();
         $('.twitter').prepend('<p id="user">' + localDate + " " + localtime + " @" + tweet.user + '</p>');
