@@ -1,40 +1,54 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <script src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="twitter.css">
-    <title>News from Twitter</title>
-    <style>
-      html, body { height: 80%; width: 80%; }
-    </style>
-  </head>
 
-  <body>
-    <h1>Twitter: </h1>
-    <ul>
-      <div class="twitter"></div>
-    </ul>
+<head>
+  <script src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="twitter.css">
+  <title>News from Twitter</title>
+  <style>
+    html,
+    body {
+      height: 80%;
+      width: 80%;
+    }
+  </style>
+</head>
 
-    <script>
-    window.onload = function() {
+<body>
+  <h1>Twitter: </h1>
+  <ul>
+    <div class="twitter"></div>
+  </ul>
+
+  <script>
+    var breaking = /^Breaking.*/i;
+    var justin = /^Just in.*/i;
+    var sokuho = /^‘¬•ñ.*/i;
+    window.onload = function () {
       socket = new WebSocket("ws://127.0.0.1:8081");
-	    socket.onmessage = function(event) {
+      socket.onmessage = function (event) {
         tweet = JSON.parse(event.data);
 
         // image
-        if(tweet.image !== undefined) {
+        if (tweet.image !== undefined) {
           $('.twitter').prepend('<div id="attached_image"><img /></div>');
 
           var image_url = tweet.image;
-          var imgPreloader=new Image();
-          imgPreloader.onload=function() { 
-             $('#attached_image').children('img').attr({'src':image_url, 'height':256});
+          var imgPreloader = new Image();
+          imgPreloader.onload = function () {
+            $('#attached_image').children('img').attr({ 'src': image_url, 'height': 256 });
           }
           imgPreloader.src = image_url;
         }
 
         // Tweet
-        $('.twitter').prepend('<p id="text">' + tweet.text + '</p>');
+        if (breaking.test(tweet.text) || justin.test(tweet.text) || sokuho.test(tweet.text)) {
+          console.log(tweet.text);
+          $('.twitter').prepend('<p id="breaking_text">' + tweet.text + '</p>');
+        }
+        else {
+          $('.twitter').prepend('<p id="text">' + tweet.text + '</p>');
+        }
 
         // Screen name
         unixtime = Date.parse(tweet.date);
@@ -46,13 +60,14 @@
         // Profile image
         $('.twitter').prepend('<div id="profile"><img /></div>');
         var imgPreloader = new Image();
-        imgPreloader.onload = function() {
+        imgPreloader.onload = function () {
           console.log(tweet.profile);
         }
         imgPreloader.src = tweet.profile;
-        $('#profile').children('img').attr({'src':tweet.profile, 'height':50, 'align':'left'});
+        $('#profile').children('img').attr({ 'src': tweet.profile, 'height': 50, 'align': 'left' });
       }
-  }
-    </script>
-  </body>
+    }
+  </script>
+</body>
+
 </html>

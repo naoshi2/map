@@ -1,5 +1,5 @@
-#profile {
-  margin: 10px;
+#user {
+  margin-left: 60px;
 }
 
 #text {
@@ -16,6 +16,21 @@
   padding: 16px 16px 16px 16px;
   max-width: 468px;
 }
+
+#breaking_text {
+  display: inline-block;
+  font-family: "Helvetica Neue", Roboto, "Segoe UI", Calibri, sans-serif;
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 16px;
+  border-color: red;
+  border-radius: 5px;
+  border-style: double;
+  margin: 10px 5px;
+  padding: 16px 16px 16px 16px;
+  max-width: 468px;
+}
+
 
 #text p {
   font-size: 16px;
