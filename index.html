@@ -53,7 +53,7 @@
 
         // Screen name
         unixtime = Date.parse(tweet.date);
-        var date1 = new Date(unixtime);
+        var date = new Date(unixtime);
         localDate = date.toLocaleDateString();
         localtime = date.toLocaleTimeString();
         $('.twitter').prepend('<p id="user">' + localDate + " " + localtime + " @" + tweet.user + '</p>');
