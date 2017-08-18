@@ -1,4 +1,4 @@
-var twitter = require('./twitter.js');
+var twitter = require('./twitter-client.js');
 client = twitter.getClient();
 
 var WebSocketServer = require('ws').Server
@@ -20,8 +20,6 @@ wss.on('connection', function (ws) {
             tweet = tweet.reverse();
             tweet.forEach(function (val, index, ar) {
                 if (tweet[index]['user']['followers_count'] > 100000) {
-                    console.log(tweet[index]['user']['profile_image_url']);
-
                     var hash = {};
                     hash.date = tweet[index]['created_at'];
                     hash.profile = tweet[index]['user']['profile_image_url'];
