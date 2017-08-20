@@ -21,6 +21,7 @@ wss.on('connection', function (ws) {
             tweet.forEach(function (val, index, ar) {
                 if (tweet[index]['user']['followers_count'] > 100000) {
                     var hash = {};
+                    hash.isrest = true;
                     hash.date = tweet[index]['created_at'];
                     hash.profile = tweet[index]['user']['profile_image_url'];
                     hash.user = tweet[index]['user']['screen_name'];

@@ -1,20 +1,22 @@
 var breaking = /^.Breaking.*/i;
 var justin = /^Just in.*/i;
-var sokuho = /^‘¬•ñ.*/i;
+var sokuho = /^ï¿½ï¿½ï¿½ï¿½.*/i;
 
-function refreshTicker() {
-    console.log('aaa');
+var tickerArray = [];
+
+function updateTicker() {
+    console.log('update ticker');
     var d = new Date();
     var minsec = d.getMinutes() + " " + d.getSeconds();
 
     $('.ticker').empty();
     $('.ticker').append('<ul>');
 
-    for (var i = 0; i < 5; i++) {
-        var str = "<li>" + i + " " + minsec + "</li>";
+    tickerArray.forEach(function(val, index, ar){
+        var str = "<li>" + val.text + " @" + val.user + "</li>";
         $('.ticker ul').prepend(str);
-        //console.log('<li> ' + i + ' ' + minsec + '</li> ');
-    }
+    })
+
     $('ul').append('</ul>');
 
     var $setElm = $('.ticker');
@@ -43,16 +45,21 @@ function refreshTicker() {
                 $activeShow.animate({ left: (-(ulWidth)), opacity: '0' }, effectSpeed, easing).next().css({ left: (ulWidth), display: 'block', opacity: '0', zIndex: '99' }).animate({ left: '0', opacity: '1' }, effectSpeed, easing).addClass('showlist').end().appendTo($targetUl).css({ zIndex: '98' }).removeClass('showlist');
             }, switchDelay);
         }
-
     });
 }
 
 window.onload = function () {
-    setInterval("refreshTicker()", 30000);
+    setInterval("updateTicker()", 30000);
 
     socket = new WebSocket("ws://127.0.0.1:8081");
     socket.onmessage = function (event) {
         tweet = JSON.parse(event.data);
+        if (tweet.isrest) {
+            var hash = {};
+            hash.user = tweet.user;
+            hash.text = tweet.text;
+            tickerArray.push(hash);
+        }
 
         // image
         if (tweet.image !== undefined) {
