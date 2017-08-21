@@ -80,11 +80,7 @@ window.onload = function () {
         }
 
         // Screen name
-        unixtime = Date.parse(tweet.date);
-        var date = new Date(unixtime);
-        localDate = date.toLocaleDateString();
-        localtime = date.toLocaleTimeString();
-        $('.twitter').prepend('<p id="user">' + localDate + " " + localtime + " @" + tweet.user + '</p>');
+        $('.twitter').prepend('<p id="user">' + tweet.date + " @" + tweet.user + '</p>');
 
         // Profile image
         $('.twitter').prepend('<div id="profile"><img /></div>');

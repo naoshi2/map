@@ -23,10 +23,12 @@ wss.on('connection', function (ws) {
                 if (tweet[index]['user']['followers_count'] > 100000) {
                     var hash = {};
                     hash.isrest = true;
-                    hash.date = tweet[index]['created_at'];
                     hash.profile = tweet[index]['user']['profile_image_url'];
                     hash.user = tweet[index]['user']['screen_name'];
                     hash.text = tweet[index]['text'];
+                    var unixtime = Date.parse(tweet[index]['created_at']);
+                    var date = new Date(unixtime);
+                    hash.date = date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
                     broadcast(hash);
                 }
             });
@@ -52,6 +54,7 @@ function broadcast(message) {
 };
 
 client.stream('user',
+//// Stream API ////
     function (stream) {
         stream.on('data', function (tweet) {
             text = JSON.stringify(tweet);
@@ -60,10 +63,12 @@ client.stream('user',
                 console.log(tweet['user']['screen_name']);
 
                 var hash = {};
-                hash.date = tweet['created_at'];
+                var unixtime = Date.parse(tweet['created_at']);
+                var date = new Date(unixtime);
+                hash.date = date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
                 hash.profile = tweet['user']['profile_image_url'];
                 hash.user = tweet['user']['screen_name'];
-                hash.text = tweet.text;
+                hash.text = tweet['text'];
                 if (tweet.entities.media !== undefined) {
                     hash.image = tweet.entities.media[0].media_url;
                 }
