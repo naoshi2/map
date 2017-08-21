@@ -14,6 +14,7 @@ var wss = new WebSocketServer({ server: server });
 var connections = [];
 
 wss.on('connection', function (ws) {
+    //// REST API ////
     var params = { count: 100 };
     client.get('statuses/home_timeline', params, function (error, tweet, response) {
         if (!error) {

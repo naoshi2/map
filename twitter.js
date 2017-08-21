@@ -13,7 +13,7 @@ function updateTicker() {
     $('.ticker').append('<ul>');
 
     tickerArray.forEach(function(val, index, ar){
-        var str = "<li>" + val.text + " @" + val.user + "</li>";
+        var str = "<li>" + val.text + " @" + val.user + " " + val.date  + " " + "</li>";
         $('.ticker ul').prepend(str);
     })
 
@@ -55,10 +55,7 @@ window.onload = function () {
     socket.onmessage = function (event) {
         tweet = JSON.parse(event.data);
         if (tweet.isrest) {
-            var hash = {};
-            hash.user = tweet.user;
-            hash.text = tweet.text;
-            tickerArray.push(hash);
+            tickerArray.push(tweet);
         }
 
         // image
