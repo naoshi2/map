@@ -6,9 +6,6 @@ var tickerArray = [];
 
 function updateTicker() {
     console.log('update ticker');
-    var d = new Date();
-    var minsec = d.getMinutes() + " " + d.getSeconds();
-
     $('.ticker').empty();
     $('.ticker').append('<ul>');
 

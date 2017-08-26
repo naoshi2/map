@@ -1,5 +1,7 @@
-body,html {
-  height: 100%;
+body, html {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
 }
 #user {
   margin-left: 60px;
@@ -72,16 +74,17 @@ body,html {
 }
 
 .twitter {
-  padding-bottom: 200px;
+  padding-bottom: 100px;
+  height: 70%;
+  overflow-y: auto;
 }
 
 .footer {
-  left: 0px;
   position: fixed;
   bottom: 0;
   width: 100%;
-  height: 200px;
-  background-color: #DBDBE2;
+  height: 20%;
+  background-color: lightgray;
 }
 
 .ticker {
@@ -91,7 +94,6 @@ body,html {
   text-align: left;
   border: #ccc 1px solid;
   position: relative;
-  overflow: hidden;
 }
 
 .ticker ul {
