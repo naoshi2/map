@@ -1,3 +1,6 @@
+var fs = require('fs');
+var json = JSON.parse(fs.readFileSync('properties.json', 'utf8'));
+
 var twitter = require('./twitter-client.js');
 client = twitter.getClient();
 
@@ -8,7 +11,8 @@ var WebSocketServer = require('ws').Server
 
 app.use(express.static(__dirname + '/'));
 var server = http.createServer(app);
-server.listen(8081);
+
+server.listen(json.serverWebSocketPort);
 var wss = new WebSocketServer({ server: server });
 
 var connections = [];
@@ -54,7 +58,7 @@ function broadcast(message) {
 };
 
 client.stream('user',
-//// Stream API ////
+    //// Stream API ////
     function (stream) {
         stream.on('data', function (tweet) {
             text = JSON.stringify(tweet);

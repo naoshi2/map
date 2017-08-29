@@ -1,16 +1,23 @@
 var breaking = /^.Breaking.*/i;
-var justin = /^Just in.*/i;
-var sokuho = /^ï¿½ï¿½ï¿½ï¿½.*/i;
+var justin = /^.*Just in.*/i;
+var sokuho = /\u901F\u5831/i; // ‘¬•ñ
 
 var tickerArray = [];
+var WebSocketPort;
+var serverIp;
+
+$.getJSON("properties.json", function (json) {
+    WebSocketPort = json.serverWebSocketPort;
+    serverIp = json.serverIp;
+})
 
 function updateTicker() {
     console.log('update ticker');
     $('.ticker').empty();
     $('.ticker').append('<ul>');
 
-    tickerArray.forEach(function(val, index, ar){
-        var str = "<li>" + val.text + " @" + val.user + " " + val.date  + " " + "</li>";
+    tickerArray.forEach(function (val, index, ar) {
+        var str = "<li>" + val.date + "<br> @" + val.user + " " + val.text + " " + "</li>";
         $('.ticker ul').prepend(str);
     })
 
@@ -48,7 +55,7 @@ function updateTicker() {
 window.onload = function () {
     setInterval("updateTicker()", 30000);
 
-    socket = new WebSocket("ws://127.0.0.1:8081");
+    socket = new WebSocket("ws://" + serverIp + ":" + WebSocketPort);
     socket.onmessage = function (event) {
         tweet = JSON.parse(event.data);
         if (tweet.isrest) {
@@ -69,7 +76,7 @@ window.onload = function () {
 
         // Tweet
         if (breaking.test(tweet.text) || justin.test(tweet.text) || sokuho.test(tweet.text)) {
-            console.log(tweet.text);
+            console.log("Breaking!!");
             $('.twitter').prepend('<p id="breaking_text">' + tweet.text + '</p>');
         }
         else {
@@ -83,7 +90,7 @@ window.onload = function () {
         $('.twitter').prepend('<div id="profile"><img /></div>');
         var imgPreloader = new Image();
         imgPreloader.onload = function () {
-            console.log(tweet.profile);
+            //console.log(tweet.profile);
         }
         imgPreloader.src = tweet.profile;
         $('#profile').children('img').attr({ 'src': tweet.profile, 'height': 50, 'align': 'left' });
