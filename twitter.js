@@ -19,6 +19,7 @@ function updateTicker() {
     $('.ticker').append('<ul>');
 
     tickerArray.forEach(function (val, index, ar) {
+        //console.log(val.text);
         var str = "<li>" + val.date + "<br> @" + val.user + " " + val.text + " " + "</li>";
         $('.ticker ul').prepend(str);
     })
@@ -55,13 +56,18 @@ function updateTicker() {
 }
 
 window.onload = function () {
-    setInterval("updateTicker()", 30000);
-
+    var isFirstCall = true;
+    setTimeout("updateTicker()", 3000);
     socket = new WebSocket("ws://" + serverIp + ":" + WebSocketPort);
+
     socket.onmessage = function (event) {
         tweet = JSON.parse(event.data);
         if (tweet.isrest) {
             tickerArray.push(tweet);
+            if (isFirstCall) {
+                setInterval("updateTicker()", 30000);
+                isFirstCall = false;
+            }
         }
 
         // image
