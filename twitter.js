@@ -1,4 +1,4 @@
-var breaking = /^.Breaking.*/i;
+var breaking = /^Breaking|#Breaking.*/i;
 var justin = /^.*Just in.*/i;
 var sokuho = /\u901F\u5831/i; // ‘¬•ñ
 
@@ -8,7 +8,9 @@ var serverIp;
 
 $.getJSON("properties.json", function (json) {
     WebSocketPort = json.serverWebSocketPort;
+    console.log(WebSocketPort);
     serverIp = json.serverIp;
+    console.log(serverIp);
 })
 
 function updateTicker() {

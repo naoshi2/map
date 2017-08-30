@@ -1,8 +1,6 @@
 var fs = require('fs');
 var json = JSON.parse(fs.readFileSync('properties.json', 'utf8'));
 
-console.log(json.key);
-
 var twitter = require('twitter');
 client = new twitter({
     access_token_key: json.key.access_token_key,
