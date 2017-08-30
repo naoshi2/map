@@ -1,8 +1,15 @@
 var fs = require('fs');
 var json = JSON.parse(fs.readFileSync('properties.json', 'utf8'));
 
-var twitter = require('./twitter-client.js');
-client = twitter.getClient();
+console.log(json.key);
+
+var twitter = require('twitter');
+client = new twitter({
+    access_token_key: json.key.access_token_key,
+    access_token_secret: json.key.access_token_secret,
+    consumer_key: json.key.consumer_key,
+    consumer_secret: json.key.consumer_secret
+})
 
 var WebSocketServer = require('ws').Server
     , http = require('http')
