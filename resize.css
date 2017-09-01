@@ -31,3 +31,32 @@
     min-width: 200px;
     background: #eee;
 }
+
+/* vertical panel */
+.panel-container-vertical {
+    display: flex;
+    flex-direction: column;   
+    height: 500px;
+    border: 1px solid silver;         
+    overflow: hidden;
+}
+.panel-top {
+    flex: 0 0 auto;  /* only manually resize */
+    padding: 10px;
+    height: 150px;
+    width: 100%;                        
+    background: #838383;
+    color: white;
+}
+.splitter-horizontal {
+    flex: 0 0 auto;
+    height: 18px;
+    background: url(images/hsizegrip.png) center center no-repeat #535353;            
+    cursor: row-resize;
+}
+.panel-bottom {
+    flex: 1 1 auto; /* resizable */
+    padding: 10px;            
+    min-height: 200px;            
+    background: #eee;
+}
