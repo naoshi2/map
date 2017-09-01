@@ -2,6 +2,7 @@ body, html {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
+  overflow-y: hidden;
 }
 #user {
   margin-left: 60px;
@@ -73,12 +74,13 @@ body, html {
   text-decoration: underline;
 }
 
-
 /* vertical panel */
 .panel-container-vertical {
   display: flex;
   flex-direction: column;   
+  height: 900px;
   border: 1px solid silver;         
+  overflow: hidden;
 }
 .twitter {
   flex: 1 1 auto;
@@ -89,14 +91,14 @@ body, html {
 }
 .splitter-horizontal {
   flex: 0 0 auto;
-  height: 1px;
-  background: url(images/hsizegrip.png) center center no-repeat #535353;            
+  height: 8px;
+  background: url(https://raw.githubusercontent.com/RickStrahl/jquery-resizable/master/assets/hsizegrip.png) center center no-repeat #535353;            
+  cursor: row-resize;
 }
 
 .footer{
   flex: 1 1 auto;
-  height: 100px;
-  min-height: 70px;            
+  min-height: 100px;            
   background: #eee;
   overflow: hidden;
 }
