@@ -65,7 +65,7 @@ window.onload = function () {
         if (tweet.isrest) {
             tickerArray.push(tweet);
             if (isFirstCall) {
-                setInterval("updateTicker()", 30000);
+                setInterval("updateTicker()", 90000);
                 isFirstCall = false;
             }
         }

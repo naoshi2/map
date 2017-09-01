@@ -73,27 +73,38 @@ body, html {
   text-decoration: underline;
 }
 
+
+/* vertical panel */
+.panel-container-vertical {
+  display: flex;
+  flex-direction: column;   
+  border: 1px solid silver;         
+}
 .twitter {
-  padding-bottom: 100px;
-  height: 70%;
-  overflow-y: auto;
+  flex: 1 1 auto;
+  padding: 10px;
+  padding-bottom: 10px;
+  height: 750px;
+  overflow-y: scroll;
+}
+.splitter-horizontal {
+  flex: 0 0 auto;
+  height: 1px;
+  background: url(images/hsizegrip.png) center center no-repeat #535353;            
 }
 
-.footer {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  height: 10%;
-  background-color: lightgray;
+.footer{
+  flex: 1 1 auto;
+  height: 100px;
+  min-height: 70px;            
+  background: #eee;
+  overflow: hidden;
 }
 
 .ticker {
-  margin: 0 auto;
   padding: 10px;
   width: 600px;
   text-align: left;
-  border: #ccc 1px solid;
-  position: relative;
 }
 
 .ticker ul {
