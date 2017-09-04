@@ -3,6 +3,7 @@ body, html {
   padding: 0;
   overflow-x: hidden;
   overflow-y: hidden;
+  height: 100%;
 }
 #user {
   margin-left: 60px;
@@ -78,15 +79,16 @@ body, html {
 .panel-container-vertical {
   display: flex;
   flex-direction: column;   
-  height: 900px;
   border: 1px solid silver;         
+  height: 100%;
   overflow: hidden;
 }
 .twitter {
   flex: 1 1 auto;
+  height: 100%;
   padding: 10px;
   padding-bottom: 10px;
-  height: 750px;
+  height: 80%;
   overflow-y: scroll;
 }
 .splitter-horizontal {
@@ -98,6 +100,7 @@ body, html {
 
 .footer{
   flex: 1 1 auto;
+  height: 15%;
   min-height: 100px;            
   background: #eee;
   overflow: hidden;

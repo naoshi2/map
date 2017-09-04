@@ -1,28 +1,39 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <script src="map.js"></script>
-    <script src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?callback=initMap"> </script>
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-    <meta charset="utf-8">
-    <title>Simple markers</title>
-    <style>
-      #map { height: 700px; width: 900px; }
-      html, body { height: 80%; width: 80%; }
-    </style>
-  </head>
 
-  <body>
-    <div id="legend">
-        <img src="t.png" />
-    </div>
+<head>
+  <script src="js/map.js"></script>
+  <script src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?callback=initMap">
 
-    <div id="map"></div>
+  </script>
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+  <meta charset="utf-8">
+  <title>Simple markers</title>
+  <style>
+    #map {
+      height: 700px;
+      width: 900px;
+    }
 
-    <div id="space">
+    html,
+    body {
+      height: 80%;
+      width: 80%;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="legend">
+    <img src="img/t.png" />
+  </div>
+
+  <div id="map"></div>
+
+  <div id="space">
     <ul>
-        <li>Latitude: <span id="lat"></li>
+      <li>Latitude: <span id="lat"></li>
         <li>Longitude: <span id="lng"></li>
     </ul>
 
@@ -38,37 +49,37 @@
     Twitter: <span id="twitter"></div>
 
     <script>
-    window.onload = function() {
-  	  socket = new WebSocket("ws://127.0.0.1:8081");
-	    socket.onmessage = function(event) {
-		    document.getElementById('twitter').innerHTML = event.data;
-	    }
-    }
+      window.onload = function () {
+        socket = new WebSocket("ws://127.0.0.1:8081");
+        socket.onmessage = function (event) {
+          document.getElementById('twitter').innerHTML = event.data;
+        }
+      }
 
-    $("#space, #map").dblclick(function (){
+      $("#space, #map").dblclick(function () {
         addMarkder();
-    });
+      });
 
-    $("#legend").dblclick(function (){
+      $("#legend").dblclick(function () {
         toggleMarkder();
-    });
+      });
 
-  $('#hoge').click(function() {
-    $.getJSON('http://zipcloud.ibsnet.co.jp/api/search?callback=?',
-      {
-        zipcode: "244-0002"
-      }
-    )
-    .done(function(data) {
-        console.log(data);
-      if (data.results) {
-        var result = data.results[0];
-        document.getElementById("address").textContent = result.address1 + result.address2 + result.address3;
-      } else {
-        $('#twitter').val('NA');
-      }
-    });
-  });
+      $('#hoge').click(function () {
+        $.getJSON('http://zipcloud.ibsnet.co.jp/api/search?callback=?',
+          {
+            zipcode: "244-0002"
+          }
+        )
+          .done(function (data) {
+            console.log(data);
+            if (data.results) {
+              var result = data.results[0];
+              document.getElementById("address").textContent = result.address1 + result.address2 + result.address3;
+            } else {
+              $('#twitter').val('NA');
+            }
+          });
+      });
     </script>
   </body>
 </html>
