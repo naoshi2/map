@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link type="text/css" rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/cupertino/jquery-ui.min.css" />
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <title>Hello world!</title>
+    <link rel="stylesheet" type="text/css" href="css/resize.css">
+    <script>
+        $(function () {
+            $('.splitter').resizable({
+                handles: "w",
+                alsoResize: ".panel-left",
+                alsoResize: ".panel-right"
+            });
+            $('.panel-right').resizable({
+                handles: "w,e",
+            });
+            $('.panel-left').resizable({
+                handles: "w,e",
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <div class="panel-container">
+        <div class="panel-left">
+            Left
+        </div>
+
+        <div class="splitter"></div>
+
+        <div class="panel-right">
+            Right
+        </div>
+    </div>
+</body>
+
+</html>
