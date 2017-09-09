@@ -1,6 +1,8 @@
 var fs = require('fs');
+var sqlite3 = require('sqlite3').verbose();
 var json = JSON.parse(fs.readFileSync('properties.json', 'utf8'));
 
+var db = new sqlite3.Database('db/db.sqlite3');
 var twitter = require('twitter');
 client = new twitter({
     access_token_key: json.key.access_token_key,
@@ -70,7 +72,6 @@ client.stream('user',
             tweet = JSON.parse(text);
             if (tweet['user']['followers_count'] > 200000) {
                 console.log(tweet['user']['screen_name']);
-
                 var hash = {};
                 var unixtime = Date.parse(tweet['created_at']);
                 var date = new Date(unixtime);
@@ -78,6 +79,7 @@ client.stream('user',
                 hash.profile = tweet['user']['profile_image_url'];
                 hash.user = tweet['user']['screen_name'];
                 hash.text = tweet['text'];
+                db.run("INSERT INTO messages (content) VALUES (?)", hash.text);
                 if (tweet.entities.media !== undefined) {
                     hash.image = tweet.entities.media[0].media_url;
                 }
@@ -88,4 +90,5 @@ client.stream('user',
         stream.on('error', function (error) {
             console.log(error);
         });
-    });
+    }
+);
