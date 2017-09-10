@@ -79,7 +79,9 @@ client.stream('user',
                 hash.profile = tweet['user']['profile_image_url'];
                 hash.user = tweet['user']['screen_name'];
                 hash.text = tweet['text'];
-                db.run("INSERT INTO messages (content) VALUES (?)", hash.text);
+
+                db.run("INSERT INTO tweet (timestamp, name, content) VALUES (?, ?,?)", hash.date, hash.user, hash.text);
+
                 if (tweet.entities.media !== undefined) {
                     hash.image = tweet.entities.media[0].media_url;
                 }
