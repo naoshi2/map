@@ -25,33 +25,30 @@ var wss = new WebSocketServer({ server: server });
 var connections = [];
 
 wss.on('connection', function (ws) {
-    //// REST API ////
-    var params = { count: 100 };
-    client.get('statuses/home_timeline', params, function (error, tweet, response) {
-        if (!error) {
-            tweet = tweet.reverse();
-            tweet.forEach(function (val, index, ar) {
-                if (tweet[index]['user']['followers_count'] > 100000) {
-                    var hash = {};
-                    hash.isrest = true;
-                    hash.profile = tweet[index]['user']['profile_image_url'];
-                    hash.user = tweet[index]['user']['screen_name'];
-                    hash.text = tweet[index]['text'];
-                    var unixtime = Date.parse(tweet[index]['created_at']);
-                    var date = new Date(unixtime);
-                    hash.date = date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
-                    broadcast(hash);
-                }
-            });
-        }
-    });
+    console.log("connection!");
+
+    db.all("SELECt * FROM tweet ORDER BY date desc LIMIT 3", function (err, rows) {
+        rows.forEach(function (row) {
+            //console.log(row.timestamp);
+            ///console.log(row.name);
+            var hash = {};
+            hash.isrest = true;
+            hash.profile = row.profile_url;
+            hash.user = row.user;
+            hash.text = row.text;
+            hash.date = row.date;
+            broadcast(hash);
+        }, this);
+    })
 
     connections.push(ws);
+
     ws.on('close', function () {
         connections = connections.filter(function (conn, i) {
             return (conn === ws) ? false : true;
         });
     });
+
     ws.on('message', function (message) {
         console.log('message:', message);
         broadcast(JSON.stringify(message));
@@ -80,7 +77,8 @@ client.stream('user',
                 hash.user = tweet['user']['screen_name'];
                 hash.text = tweet['text'];
 
-                db.run("INSERT INTO tweet (timestamp, name, content) VALUES (?, ?,?)", hash.date, hash.user, hash.text);
+                db.run("INSERT INTO tweet (date, user, text, profile_url) VALUES (?, ?, ?, ?)",
+                    hash.date, hash.user, hash.text, hash.profile);
 
                 if (tweet.entities.media !== undefined) {
                     hash.image = tweet.entities.media[0].media_url;
