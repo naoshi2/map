@@ -2,7 +2,8 @@ var fs = require('fs');
 var sqlite3 = require('sqlite3').verbose();
 var json = JSON.parse(fs.readFileSync('properties.json', 'utf8'));
 
-var db = new sqlite3.Database('db/db.sqlite3');
+var table = 'db/db.sqlite3';
+
 var twitter = require('twitter');
 client = new twitter({
     access_token_key: json.key.access_token_key,
@@ -25,14 +26,16 @@ var wss = new WebSocketServer({ server: server });
 var connections = [];
 
 wss.on('connection', function (ws) {
+
     console.log("connection!");
 
-    db.all("SELECt * FROM tweet ORDER BY date desc LIMIT 3", function (err, rows) {
+    var db = new sqlite3.Database(table);
+    db.all("SELECt * FROM tweet ORDER BY date desc LIMIT 9", function (err, rows) {
+        rows = rows.reverse();
         rows.forEach(function (row) {
             //console.log(row.timestamp);
             ///console.log(row.name);
             var hash = {};
-            hash.isrest = true;
             hash.profile = row.profile_url;
             hash.user = row.user;
             hash.text = row.text;
@@ -40,6 +43,7 @@ wss.on('connection', function (ws) {
             broadcast(hash);
         }, this);
     })
+    db.close();
 
     connections.push(ws);
 
@@ -77,8 +81,10 @@ client.stream('user',
                 hash.user = tweet['user']['screen_name'];
                 hash.text = tweet['text'];
 
+                var db = new sqlite3.Database(table);
                 db.run("INSERT INTO tweet (date, user, text, profile_url) VALUES (?, ?, ?, ?)",
                     hash.date, hash.user, hash.text, hash.profile);
+                db.close();
 
                 if (tweet.entities.media !== undefined) {
                     hash.image = tweet.entities.media[0].media_url;
