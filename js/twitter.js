@@ -15,6 +15,7 @@ $.getJSON("properties.json", function (json) {
 
 function updateTicker() {
     console.log('update ticker');
+    console.log(tickerArray);
     $('.ticker').empty();
     $('.ticker').append('<ul>');
 
@@ -62,12 +63,18 @@ window.onload = function () {
 
     socket.onmessage = function (event) {
         tweet = JSON.parse(event.data);
-        if (tweet.isrest) {
-            tickerArray.push(tweet);
-            if (isFirstCall) {
-                setInterval("updateTicker()", 90000);
-                isFirstCall = false;
-            }
+
+        console.log("push");
+        tickerArray.push(tweet);
+
+        if (isFirstCall) {
+            setInterval("updateTicker()", 90000);
+            isFirstCall = false;
+        }
+
+        if (tickerArray.length > 10) {
+            console.log("shift");
+            tickerArray.shift();
         }
 
         // image
