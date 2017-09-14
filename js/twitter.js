@@ -15,7 +15,13 @@ $.getJSON("properties.json", function (json) {
 
 function updateTicker() {
     console.log('update ticker');
+
+    while (tickerArray.length > 10) {
+        tickerArray.shift();
+    }
+
     console.log(tickerArray);
+
     $('.ticker').empty();
     $('.ticker').append('<ul>');
 
@@ -72,10 +78,12 @@ window.onload = function () {
             isFirstCall = false;
         }
 
+        /*
         if (tickerArray.length > 10) {
             console.log("shift");
             tickerArray.shift();
         }
+        */
 
         // image
         if (tweet.image !== undefined) {
