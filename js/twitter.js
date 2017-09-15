@@ -23,7 +23,7 @@ function updateTicker() {
     console.log(tickerArray);
 
     $('.ticker').empty();
-    $('.ticker').append('<ul>');
+    $('.ticker').append('<ul></ul>');
 
     tickerArray.forEach(function (val, index, ar) {
         //console.log(val.text);
@@ -31,7 +31,6 @@ function updateTicker() {
         $('.ticker ul').prepend(str);
     })
 
-    $('ul').append('</ul>');
 
     var $setElm = $('.ticker');
     var effectSpeed = 1000;
@@ -55,6 +54,7 @@ function updateTicker() {
         $setList.css({ left: (ulWidth), display: 'block', opacity: '0', zIndex: '98' }).stop().animate({ left: '0', opacity: '1' }, effectSpeed, easing).addClass('showlist');
         if (liCont > 1) {
             setInterval(function () {
+                console.log($('li').length);
                 var $activeShow = $targetObj.find('.showlist');
                 $activeShow.animate({ left: (-(ulWidth)), opacity: '0' }, effectSpeed, easing).next().css({ left: (ulWidth), display: 'block', opacity: '0', zIndex: '99' }).animate({ left: '0', opacity: '1' }, effectSpeed, easing).addClass('showlist').end().appendTo($targetUl).css({ zIndex: '98' }).removeClass('showlist');
             }, switchDelay);
@@ -77,13 +77,6 @@ window.onload = function () {
             setInterval("updateTicker()", 90000);
             isFirstCall = false;
         }
-
-        /*
-        if (tickerArray.length > 10) {
-            console.log("shift");
-            tickerArray.shift();
-        }
-        */
 
         // image
         if (tweet.image !== undefined) {
