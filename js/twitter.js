@@ -5,6 +5,7 @@ var sokuho = /\u901F\u5831/i; // ‘¬•ñ
 var tickerArray = [];
 var WebSocketPort;
 var serverIp;
+var tickerIntervalId;
 
 $.getJSON("properties.json", function (json) {
     WebSocketPort = json.serverWebSocketPort;
@@ -15,6 +16,9 @@ $.getJSON("properties.json", function (json) {
 
 function updateTicker() {
     console.log('update ticker');
+    if (tickerIntervalId !== undefined) {
+        clearInterval(tickerIntervalId);
+    }
 
     while (tickerArray.length > 10) {
         tickerArray.shift();
@@ -30,7 +34,6 @@ function updateTicker() {
         var str = "<li>" + val.date + "<br> @" + val.user + " " + val.text + " " + "</li>";
         $('.ticker ul').prepend(str);
     })
-
 
     var $setElm = $('.ticker');
     var effectSpeed = 1000;
@@ -53,8 +56,7 @@ function updateTicker() {
         var liCont = $targetLi.length;
         $setList.css({ left: (ulWidth), display: 'block', opacity: '0', zIndex: '98' }).stop().animate({ left: '0', opacity: '1' }, effectSpeed, easing).addClass('showlist');
         if (liCont > 1) {
-            setInterval(function () {
-                console.log($('li').length);
+            tickerIntervalId = setInterval(function () {
                 var $activeShow = $targetObj.find('.showlist');
                 $activeShow.animate({ left: (-(ulWidth)), opacity: '0' }, effectSpeed, easing).next().css({ left: (ulWidth), display: 'block', opacity: '0', zIndex: '99' }).animate({ left: '0', opacity: '1' }, effectSpeed, easing).addClass('showlist').end().appendTo($targetUl).css({ zIndex: '98' }).removeClass('showlist');
             }, switchDelay);
