@@ -65,6 +65,14 @@ function broadcast(message) {
     });
 };
 
+function getMonth(date) {
+    var month = date.getMonth() + 1;
+    if (month < 10) {
+        month = "0" + month;
+    }
+    return month;
+};
+
 client.stream('user',
     //// Stream API ////
     function (stream) {
@@ -76,7 +84,10 @@ client.stream('user',
                 var hash = {};
                 var unixtime = Date.parse(tweet['created_at']);
                 var date = new Date(unixtime);
-                hash.date = date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
+                hash.date = date.getFullYear() + '-' +
+                    getMonth(date) + "-" +
+                    date.getDate() + " " +
+                    date.toLocaleTimeString();
                 hash.profile = tweet['user']['profile_image_url'];
                 hash.user = tweet['user']['screen_name'];
                 hash.text = tweet['text'];
