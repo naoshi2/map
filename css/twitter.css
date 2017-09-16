@@ -5,9 +5,6 @@ body, html {
   overflow-y: hidden;
   height: 100%;
 }
-#user {
-  margin-left: 60px;
-}
 
 #text {
   display: inline-block;
@@ -38,7 +35,6 @@ body, html {
   max-width: 468px;
 }
 
-
 #text p {
   font-size: 16px;
   font-weight: normal;
@@ -63,6 +59,7 @@ body, html {
   font-size: 14px;
   text-decoration: none;
   outline: 0 none;
+  margin-left: 60px;
 }
 
 #user a {
@@ -100,7 +97,7 @@ body, html {
 
 .footer{
   flex: 1 1 auto;
-  height: 15%;
+  height: 17%;
   min-height: 100px;
   background: #eee;
   overflow: hidden;

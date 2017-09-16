@@ -31,7 +31,8 @@ function updateTicker() {
 
     tickerArray.forEach(function (val, index, ar) {
         //console.log(val.text);
-        var str = "<li>" + val.date + "<br> @" + val.user + " " + val.text + " " + "</li>";
+        text = decorateText(val.text);
+        var str = "<li>" + val.date + " @" + val.user + " <br>" + text + " " + "</li>";
         $('.ticker ul').prepend(str);
     })
 
@@ -93,12 +94,14 @@ window.onload = function () {
         }
 
         // Tweet
-        if (breaking.test(tweet.text) || justin.test(tweet.text) || sokuho.test(tweet.text)) {
+        var text = tweet.text;
+        text = decorateText(text);
+        if (breaking.test(text) || justin.test(text) || sokuho.test(text)) {
             console.log("Breaking!!");
-            $('.twitter').prepend('<p id="breaking_text">' + tweet.text + '</p>');
+            $('.twitter').prepend('<p id="breaking_text">' + text + '</p>');
         }
         else {
-            $('.twitter').prepend('<p id="text">' + tweet.text + '</p>');
+            $('.twitter').prepend('<p id="text">' + text + '</p>');
         }
 
         // Screen name
