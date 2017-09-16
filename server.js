@@ -2,7 +2,7 @@ var fs = require('fs');
 var sqlite3 = require('sqlite3').verbose();
 var json = JSON.parse(fs.readFileSync('properties.json', 'utf8'));
 
-var table = 'db/db.sqlite3';
+const table = 'db/db.sqlite3';
 
 var twitter = require('twitter');
 client = new twitter({

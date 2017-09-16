@@ -1,6 +1,6 @@
-var breaking = /^Breaking|#Breaking.*/i;
-var justin = /^.*Just in.*/i;
-var sokuho = /\u901F\u5831/i; // ‘¬•ñ
+const breaking = /^Breaking|#Breaking.*/i;
+const justin = /^.*Just in.*/i;
+const sokuho = /\u901F\u5831/i; // ‘¬•ñ
 
 var tickerArray = [];
 var WebSocketPort;
@@ -38,9 +38,9 @@ function updateTicker() {
     })
 
     var $setElm = $('.ticker');
-    var effectSpeed = 1000;
-    var switchDelay = 6000;
-    var easing = 'swing';
+    const effectSpeed = 1000;
+    const switchDelay = 6000;
+    const easing = 'swing';
 
     $setElm.each(function () {
         var effectFilter = $(this).attr('rel');
@@ -55,9 +55,8 @@ function updateTicker() {
         $targetObj.css({ height: (listHeight) });
         $targetLi.css({ top: '0', left: '0', position: 'absolute' });
 
-        var liCont = $targetLi.length;
         $setList.css({ left: (ulWidth), display: 'block', opacity: '0', zIndex: '98' }).stop().animate({ left: '0', opacity: '1' }, effectSpeed, easing).addClass('showlist');
-        if (liCont > 1) {
+        if ($targetLi.length > 1) {
             tickerIntervalId = setInterval(function () {
                 var $activeShow = $targetObj.find('.showlist');
                 $activeShow.animate({ left: (-(ulWidth)), opacity: '0' }, effectSpeed, easing).next().css({ left: (ulWidth), display: 'block', opacity: '0', zIndex: '99' }).animate({ left: '0', opacity: '1' }, effectSpeed, easing).addClass('showlist').end().appendTo($targetUl).css({ zIndex: '98' }).removeClass('showlist');
