@@ -87,7 +87,7 @@ client.stream('user',
                 hash.date = date.getFullYear() + '-' +
                     getMonth(date) + "-" +
                     date.getDate() + " " +
-                    date.toLocaleTimeString();
+                    date.toLocaleTimeString("ja-JP", { hour12: false });
                 hash.profile = tweet['user']['profile_image_url'];
                 hash.user = tweet['user']['screen_name'];
                 hash.text = tweet['text'];
