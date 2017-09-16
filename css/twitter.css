@@ -35,21 +35,21 @@ body, html {
   max-width: 468px;
 }
 
-#text p {
+p {
   font-size: 16px;
   font-weight: normal;
   line-height: 20px;
 }
 
-#text a {
+a {
   color: #2b7bb9;
   font-weight: normal;
   text-decoration: none;
   outline: 0 none;
 }
 
-#text a:hover,
-#text a:focus {
+a:hover,
+a:focus {
   text-decoration: underline;
 }
 
@@ -60,16 +60,6 @@ body, html {
   text-decoration: none;
   outline: 0 none;
   margin-left: 60px;
-}
-
-#user a {
-  color: black;
-  font-weight: bold;
-}
-
-#user a:hover {
-  color: #2b7bb9;
-  text-decoration: underline;
 }
 
 /* vertical panel */

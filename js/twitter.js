@@ -32,7 +32,8 @@ function updateTicker() {
     tickerArray.forEach(function (val, index, ar) {
         //console.log(val.text);
         text = decorateText(val.text);
-        var str = "<li>" + val.date + " @" + val.user + " <br>" + text + " " + "</li>";
+        user = addUserLink(val.user);
+        var str = "<li>" + val.date + " " + user + " <br>" + text + " " + "</li>";
         $('.ticker ul').prepend(str);
     })
 
@@ -105,7 +106,8 @@ window.onload = function () {
         }
 
         // Screen name
-        $('.twitter').prepend('<p id="user">' + tweet.date + " @" + tweet.user + '</p>');
+        user = addUserLink(tweet.user);
+        $('.twitter').prepend('<p id="user">' + tweet.date + " " + user + '</p>');
 
         // Profile image
         $('.twitter').prepend('<div id="profile"><img /></div>');

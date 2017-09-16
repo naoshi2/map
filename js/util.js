@@ -3,8 +3,15 @@ function decorateText(str) {
     return addHashTag(str);
 }
 
+function addUserLink(screen_name) {
+    const twitter_base = "https://twitter.com/";
+    return '<a href="' + twitter_base + screen_name +
+        '" target="_blank"> @' + screen_name + '</a>'
+}
+
+
 function addLink(str) {
-    var regexp_url = /((h?)(ttps?:\/\/[a-zA-Z0-9.\-_@:/~?%&;=+#',()*!]+))/g;
+    const regexp_url = /((h?)(ttps?:\/\/[a-zA-Z0-9.\-_@:/~?%&;=+#',()*!]+))/g;
     var regexp_makeLink = function (all, url, h, href) {
         return '<a href="h' + href + '" target="_blank">' + url + '</a>';
     }
@@ -12,9 +19,9 @@ function addLink(str) {
 }
 
 function addHashTag(str) {
-    var pattern = /(#[a-zA-Z0-9‚Ÿ-‚ñƒ@-ƒ–ˆŸ-ê¤+.\-_@:/~?%&;=+#',()*!]+)/g;
-    var base = "https://twitter.com/hashtag/";
-    var bottom = "?f=tweets&vertical=default&src=hash";
+    const pattern = /(#[a-zA-Z0-9‚Ÿ-‚ñƒ@-ƒ–ˆŸ-ê¤+.\-_@:/~?%&;=+#',()*!]+)/g;
+    const base = "https://twitter.com/hashtag/";
+    const bottom = "?f=tweets&vertical=default&src=hash";
 
     var list = str.match(pattern);
 
@@ -26,7 +33,6 @@ function addHashTag(str) {
         var word = tag.replace('#', '');    // hoge
 
         var link = base + word + bottom;
-
         str = str.replace(tag, '<a href="' + link + '" target="_blank">' + tag + '</a>');
     }
     return str;
