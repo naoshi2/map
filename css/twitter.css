@@ -48,6 +48,11 @@ a {
   outline: 0 none;
 }
 
+#attached_image {
+  padding-left: 50px;
+  padding-bottom: 10px;
+}
+
 a:hover,
 a:focus {
   text-decoration: underline;
