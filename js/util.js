@@ -1,3 +1,17 @@
+function getLocalTime(str) {
+    var date = new Date(str);
+    var month = date.getMonth() + 1;
+
+    if (month < 10) {
+        month = "0" + month;
+    }
+
+    return date.getFullYear() + '-' +
+        month + "-" +
+        date.getDate() + " " +
+        date.toLocaleTimeString("ja-JP", { hour12: false });
+}
+
 function decorateText(str) {
     str = addLink(str);
     return addHashTag(str);
@@ -8,7 +22,6 @@ function addUserLink(screen_name) {
     return '<a href="' + twitter_base + screen_name +
         '" target="_blank"> @' + screen_name + '</a>'
 }
-
 
 function addLink(str) {
     const regexp_url = /((h?)(ttps?:\/\/[a-zA-Z0-9.\-_@:/~?%&;=+#',()*!]+))/g;

@@ -30,7 +30,7 @@ wss.on('connection', function (ws) {
     console.log("connection!");
 
     var db = new sqlite3.Database(data);
-    db.all("SELECt * FROM tw ORDER BY date desc LIMIT 9", function (err, rows) {
+    db.all("SELECT * FROM tw ORDER BY unixtime desc LIMIT 10", function (err, rows) {
         rows = rows.reverse();
         rows.forEach(function (row) {
             var hash = {};
@@ -38,7 +38,7 @@ wss.on('connection', function (ws) {
             hash.profile = row.profile_url;
             hash.user = row.user;
             hash.text = row.text;
-            hash.date = row.date;
+            hash.date = row.unixtime;
             broadcast(hash);
         }, this);
     })
@@ -64,14 +64,6 @@ function broadcast(message) {
     });
 };
 
-function getMonth(date) {
-    var month = date.getMonth() + 1;
-    if (month < 10) {
-        month = "0" + month;
-    }
-    return month;
-};
-
 client.stream('user',
     //// Stream API ////
     function (stream) {
@@ -80,6 +72,7 @@ client.stream('user',
             tweet = JSON.parse(text);
             if (tweet['user']['followers_count'] > 200000) {
                 console.log(tweet['user']['screen_name']);
+
                 var hash = {};
                 hash.id = tweet['id_str'];
                 var unixtime = Date.parse(tweet['created_at']);

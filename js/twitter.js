@@ -9,9 +9,8 @@ var tickerIntervalId;
 
 $.getJSON("properties.json", function (json) {
     WebSocketPort = json.serverWebSocketPort;
-    console.log(WebSocketPort);
     serverIp = json.serverIp;
-    console.log(serverIp);
+    console.log("port " + WebSocketPort + ", IP " + serverIp);
 })
 
 function updateTicker() {
@@ -30,10 +29,10 @@ function updateTicker() {
     $('.ticker').append('<ul></ul>');
 
     tickerArray.forEach(function (val, index, ar) {
-        //console.log(val.text);
         text = decorateText(val.text);
         user = addUserLink(val.user);
-        var str = "<li>" + val.date + " " + user + " <br>" + text + " " + "</li>";
+        date = getLocalTime(val.date);
+        var str = "<li>" + date + " " + user + " <br>" + text + " " + "</li>";
         $('.ticker ul').prepend(str);
     })
 
@@ -106,7 +105,8 @@ window.onload = function () {
 
         // Screen name
         user = addUserLink(tweet.user);
-        $('.twitter').prepend('<p id="user">' + tweet.date + " " + user + '</p>');
+        date = getLocalTime(tweet.date);
+        $('.twitter').prepend('<p id="user">' + date + " " + user + '</p>');
 
         // Profile image
         $('.twitter').prepend('<div id="profile"><img /></div>');
