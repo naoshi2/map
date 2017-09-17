@@ -104,7 +104,7 @@ window.onload = function () {
         }
 
         // Screen name
-        user = addUserLink(tweet.user);
+        user = addUserLink(tweet.user, tweet.id);
         date = getLocalTime(tweet.date);
         $('.twitter').prepend('<p id="user">' + date + " " + user + '</p>');
 

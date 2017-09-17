@@ -17,9 +17,9 @@ function decorateText(str) {
     return addHashTag(str);
 }
 
-function addUserLink(screen_name) {
+function addUserLink(screen_name, id) {
     const twitter_base = "https://twitter.com/";
-    return '<a href="' + twitter_base + screen_name +
+    return '<a href="' + twitter_base + screen_name + '/status/' + id +
         '" target="_blank"> @' + screen_name + '</a>'
 }
 
