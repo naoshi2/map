@@ -2,7 +2,7 @@ var fs = require('fs');
 var sqlite3 = require('sqlite3').verbose();
 var json = JSON.parse(fs.readFileSync('properties.json', 'utf8'));
 
-const table = 'db/db.sqlite3';
+const data = 'db/db.sqlite3';
 
 var twitter = require('twitter');
 client = new twitter({
@@ -29,13 +29,12 @@ wss.on('connection', function (ws) {
 
     console.log("connection!");
 
-    var db = new sqlite3.Database(table);
-    db.all("SELECt * FROM tweet ORDER BY date desc LIMIT 9", function (err, rows) {
+    var db = new sqlite3.Database(data);
+    db.all("SELECt * FROM tw ORDER BY date desc LIMIT 9", function (err, rows) {
         rows = rows.reverse();
         rows.forEach(function (row) {
-            //console.log(row.timestamp);
-            ///console.log(row.name);
             var hash = {};
+            hash.id = row.id;
             hash.profile = row.profile_url;
             hash.user = row.user;
             hash.text = row.text;
@@ -82,19 +81,16 @@ client.stream('user',
             if (tweet['user']['followers_count'] > 200000) {
                 console.log(tweet['user']['screen_name']);
                 var hash = {};
+                hash.id = tweet['id_str'];
                 var unixtime = Date.parse(tweet['created_at']);
-                var date = new Date(unixtime);
-                hash.date = date.getFullYear() + '-' +
-                    getMonth(date) + "-" +
-                    date.getDate() + " " +
-                    date.toLocaleTimeString("ja-JP", { hour12: false });
+                hash.date = unixtime;
                 hash.profile = tweet['user']['profile_image_url'];
                 hash.user = tweet['user']['screen_name'];
                 hash.text = tweet['text'];
 
-                var db = new sqlite3.Database(table);
-                db.run("INSERT INTO tweet (date, user, text, profile_url) VALUES (?, ?, ?, ?)",
-                    hash.date, hash.user, hash.text, hash.profile);
+                var db = new sqlite3.Database(data);
+                db.run("INSERT INTO tw (id, unixtime, user, text, profile_url) VALUES (?, ?, ?, ?, ?)",
+                    hash.id, hash.date, hash.user, hash.text, hash.profile);
                 db.close();
 
                 if (tweet.entities.media !== undefined) {
