@@ -30,7 +30,7 @@ wss.on('connection', function (ws) {
     console.log("connection!");
 
     var db = new sqlite3.Database(data);
-    db.all("SELECT * FROM tw ORDER BY unixtime desc LIMIT 10", function (err, rows) {
+    db.all("SELECT * FROM tw ORDER BY unixtime desc LIMIT 20", function (err, rows) {
         rows = rows.reverse();
         rows.forEach(function (row) {
             var hash = {};
