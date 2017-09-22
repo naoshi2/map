@@ -50,15 +50,12 @@
 
     <script>
       window.onload = function () {
-        socket = new WebSocket("ws://127.0.0.1:8081");
+        var host = "localhost"
+        socket = new WebSocket("ws://" + host + ":8082");
         socket.onmessage = function (event) {
-          document.getElementById('twitter').innerHTML = event.data;
+          addMarker(event.data);
         }
       }
-
-      $("#space, #map").dblclick(function () {
-        addMarkder();
-      });
 
       $("#legend").dblclick(function () {
         toggleMarkder();

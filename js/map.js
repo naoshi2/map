@@ -1,10 +1,11 @@
+
 function initMap() {
-    var originLatLng = { lat: 35.6807233, lng: 139.7676282 };
+    var originLatLng = { lat: 35.3971, lng: 139.541 };
     document.getElementById("lat").textContent = originLatLng.lat;
     document.getElementById("lng").textContent = originLatLng.lng;
 
     this.map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 15,
+        zoom: 12,
         center: originLatLng
     });
 
@@ -47,21 +48,31 @@ function getBounds(map) {
     return bounds;
 }
 
-function addMarkder() {
-    boouns = getBounds(this.map);
-    lat = Math.random() * (bounds.North - boouns.South) + bounds.South;
-    lng = Math.random() * (bounds.East - boouns.West) + bounds.West;
+function addMarker(json) {
+    console.log(json);
+    json = JSON.parse(json);
+
+    lat = (json['north'] + json['south']) / 2;
+    lng = (json['west'] + json['east']) / 2;
 
     var LatLng = { lat: lat, lng: lng };
 
-    marker = new google.maps.Marker({
+    var infowindow = new google.maps.InfoWindow({
+        content: "@" + json['user'] + "<br>" + json['text']
+    });
+
+    var marker = new google.maps.Marker({
         position: LatLng,
         map: map,
-        title: 'Hello world!',
+        title: json['user'],
         icon: '../img/t.png'
     })
+    marker.addListener('click', function () {
+        infowindow.open(map, marker);
+    });
+
     markerArray.push(marker);
-};
+}
 
 function toggleMarkder() {
     for (var m in markerArray) {
