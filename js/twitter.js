@@ -87,7 +87,7 @@ window.onload = function () {
             var image_url = tweet.image;
             var imgPreloader = new Image();
             imgPreloader.onload = function () {
-                $('#attached_image').children('img').attr({ 'src': image_url, 'height': 256 });
+                $('#attached_image').children('img').attr({ 'src': image_url, 'height': 200 });
             }
             imgPreloader.src = image_url;
         }
